@@ -1,0 +1,37 @@
+name: test
+
+on:
+  workflow_call:
+    inputs:
+      go:
+        description: 'Go version'
+        default: 1.18
+        required: false
+        type: string
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748 # latest
+
+      - name: Install Go
+        uses: actions/setup-go@f6164bd8c8acb4a71fb2791a8b6c4024ff038dab # latest
+        with:
+          go-version: ${{ inputs.go }}
+          check-latest: true
+
+      - name: Run tests
+        run: go test -v -race -shuffle=on -coverprofile=coverage.txt ./...
+
+      # - name: Upload Coverage
+      #   uses: codecov/codecov-action@e3c560433a6cc60aec8812599b7844a7b4fa0d71 # latest
+      #   continue-on-error: true
+      #   with:
+      #     token: ${{secrets.CODECOV_TOKEN}}
+      #     file: ./coverage.txt
+      #     fail_ci_if_error: false
