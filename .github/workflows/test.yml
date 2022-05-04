@@ -26,7 +26,7 @@ jobs:
           check-latest: true
 
       - name: Run tests
-        run: go test -v -shuffle=on -coverprofile=coverage.txt ./...
+        run: go test -v -coverprofile=coverage.txt ./...
 
       # - name: Upload Coverage
       #   uses: codecov/codecov-action@e3c560433a6cc60aec8812599b7844a7b4fa0d71 # latest
