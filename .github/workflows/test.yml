@@ -27,11 +27,6 @@ jobs:
 
       - name: Run tests
         run: CGO_ENABLED=0 go test -v -coverprofile=coverage.txt ./...
-
-      # - name: Upload Coverage
-      #   uses: codecov/codecov-action@e3c560433a6cc60aec8812599b7844a7b4fa0d71 # latest
-      #   continue-on-error: true
-      #   with:
-      #     token: ${{secrets.CODECOV_TOKEN}}
-      #     file: ./coverage.txt
-      #     fail_ci_if_error: false
+        
+      - name: Kill containers
+        run: docker kill $(docker ps -q)
